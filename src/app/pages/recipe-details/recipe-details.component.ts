@@ -9,19 +9,31 @@ import { pluck, switchMap } from 'rxjs';
   standalone: true,
   template: `<div class="flex gap-20" *ngIf="recipeDetails()">
     <div class="flex flex-col gap-4 flex-shrink-0">
-      <h2 class="tex-2xl font-semibold">{{ recipeDetails().title }}</h2>
+      <h2 class="max-w-[400px] tex-2xl font-semibold">
+        {{ recipeDetails().title }}
+      </h2>
       <img class="w-[400px]" [src]="recipeDetails().image" alt="" />
     </div>
     <div class="flex flex-col gap-6">
       <div class="flex gap-4">
         <button
-          class="inline-block bg-gray-900 py-3 px-6 text-white border border-gray-900 font-semibold"
+          class="inline-block py-3 px-6 border-2 border-gray-900 font-semibold"
+          [class]="
+            activeTab() !== 'instructions'
+              ? 'text-gray-900 bg-white'
+              : 'text-white bg-gray-900 '
+          "
           (click)="activeInstructions()"
         >
           Instructions
         </button>
         <button
-          class="inline-block bg-gray-900 py-3 px-6 text-white border border-gray-900 font-semibold"
+          class="inline-block py-3 px-6 border-2 border-gray-900 font-semibold"
+          [class]="
+            activeTab() !== 'ingredients'
+              ? 'text-gray-900 bg-white'
+              : 'text-white border bg-gray-900'
+          "
           (click)="activeIngredients()"
         >
           Ingredients

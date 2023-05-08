@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { map, of, tap } from 'rxjs';
+import { Observable, map, of, tap } from 'rxjs';
 import { STORAGE_KEYS, StorageService } from '@services/storage.service';
+import { Recipe } from '../models/Recipe';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class BackendService {
     private storageService: StorageService
   ) {}
   getPopularRecipes(recordnumber: number | null = null) {
-    const popularRecipes = this.storageService.get(
+    const popularRecipes = this.storageService.get<Recipe[]>(
       STORAGE_KEYS.POPULAR_RECIPES
     );
     if (popularRecipes) {
@@ -23,7 +24,7 @@ export class BackendService {
     } else {
       const number = recordnumber ? `&number=${recordnumber}` : '';
       return this.httpClient
-        .get<{ recipes: any[] }>(
+        .get<{ recipes: Recipe[] }>(
           `${this.apiUrl}/recipes/random?apiKey=${this.apiKey}${number}`
         )
         .pipe(
@@ -36,7 +37,7 @@ export class BackendService {
   }
 
   getVegetarianRecipes(recordnumber: number | null = null) {
-    const popularRecipes = this.storageService.get(
+    const popularRecipes = this.storageService.get<Recipe[]>(
       STORAGE_KEYS.VEGETARIAN_RECIPES
     );
     if (popularRecipes) {
@@ -44,7 +45,7 @@ export class BackendService {
     } else {
       const number = recordnumber ? `&number=${recordnumber}` : '';
       return this.httpClient
-        .get<{ recipes: any[] }>(
+        .get<{ recipes: Recipe[] }>(
           `${this.apiUrl}/recipes/random?apiKey=${this.apiKey}&tags=vegetarian${number}`
         )
         .pipe(
@@ -57,14 +58,14 @@ export class BackendService {
   }
 
   getRecipesByCuisine(cuisine: string) {
-    const cuisineRecipes = this.storageService.get(
+    const cuisineRecipes = this.storageService.get<{ [key: string]: Recipe[] }>(
       STORAGE_KEYS.CUISINE_RECIPES
     );
     if (cuisineRecipes?.[cuisine]) {
       return of(cuisineRecipes[cuisine]);
     } else {
       return this.httpClient
-        .get<{ results: any }>(
+        .get<{ results: Recipe[] }>(
           `${this.apiUrl}/recipes/complexSearch?apiKey=${this.apiKey}&cuisine=${cuisine}&number=10`
         )
         .pipe(
@@ -81,21 +82,21 @@ export class BackendService {
 
   getRecipesBySearchKey(searchKey: string) {
     return this.httpClient
-      .get<{ results: any }>(
+      .get<{ results: Recipe[] }>(
         `${this.apiUrl}/recipes/complexSearch?apiKey=${this.apiKey}&query=${searchKey}`
       )
       .pipe(map(({ results }) => results));
   }
 
-  getRecipeById(id: string) {
-    const recipesDetails = this.storageService.get(
+  getRecipeById(id: string): Observable<Recipe> {
+    const recipesDetails = this.storageService.get<{ [id: string]: Recipe }>(
       STORAGE_KEYS.RECIPES_DETAILS
     );
     if (recipesDetails?.[id]) {
       return of(recipesDetails[id]);
     } else {
       return this.httpClient
-        .get<any>(
+        .get<Recipe>(
           `${this.apiUrl}/recipes/${id}/information?apiKey=${this.apiKey}`
         )
         .pipe(

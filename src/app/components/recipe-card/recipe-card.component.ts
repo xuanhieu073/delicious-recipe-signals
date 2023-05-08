@@ -1,6 +1,7 @@
 import { RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
+import { Recipe } from 'src/app/models/Recipe';
 
 @Component({
   selector: 'cous-recipe-card',
@@ -23,5 +24,5 @@ import { Component, Input, signal } from '@angular/core';
   imports: [CommonModule, RouterModule],
 })
 export class RecipeCardComponent {
-  @Input({ required: true }) recipe: any = null;
+  @Input({ required: true }) recipe: Recipe;
 }
