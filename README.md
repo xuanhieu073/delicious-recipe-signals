@@ -1,6 +1,7 @@
 # Deliciousss
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0-rc.0.
+ - This project is a case study to learn new features released in Angular 16. Its signals are a really exciting feature that can make Angular more reactive.
+ - It was a reference to the recipe app tutorial developed by the 'developedbyed' YouTube channel. The link to the tutorial is here: https://www.youtube.com/watch?v=xc4uOzlndAk.
 
 ## Development server
 
