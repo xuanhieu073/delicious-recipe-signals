@@ -1,6 +1,6 @@
 # Deliciousss
 
- - This project is a case study to learn new features released in Angular 16. Its signals are a really exciting feature that can make Angular more reactive.
+ - This project is a case study to learn new features released in Angular 16, it's signals, It is a really exciting feature that can make Angular more reactive.
  - It was a reference to the recipe app tutorial developed by the 'developedbyed' YouTube channel. The link to the tutorial is here: https://www.youtube.com/watch?v=xc4uOzlndAk.
 
 ## Development server
