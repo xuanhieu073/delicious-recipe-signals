@@ -7,15 +7,18 @@ import { pluck, switchMap } from 'rxjs';
 
 @Component({
   standalone: true,
-  template: `<div class="flex gap-20" *ngIf="recipeDetails()">
+  template: `<div
+    class="flex flex-col md:flex-row gap-x-20 gap-y-6"
+    *ngIf="recipeDetails()"
+  >
     <div class="flex flex-col gap-4 flex-shrink-0">
       <h2 class="max-w-[400px] tex-2xl font-semibold">
         {{ recipeDetails().title }}
       </h2>
-      <img class="w-[400px]" [src]="recipeDetails().image" alt="" />
+      <img class="w-full" [src]="recipeDetails().image" alt="" />
     </div>
     <div class="flex flex-col gap-6">
-      <div class="flex gap-4">
+      <div class="flex justify-center md:justify-start gap-4">
         <button
           class="inline-block py-3 px-6 border-2 border-gray-900 font-semibold"
           [class]="
