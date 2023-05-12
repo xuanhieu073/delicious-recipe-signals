@@ -1,9 +1,9 @@
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, effect, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, effect, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { STORAGE_KEYS, StorageService } from '@services/storage.service';
-import { filter, fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'cous-search-input',
@@ -16,20 +16,22 @@ import { filter, fromEvent } from 'rxjs';
       class="flex-1 bg-transparent outline-none text-white font-semibold"
       type="text"
       (keydown.enter)="updateSearchString($event)"
-      [value]="searchString()"
+      [formControl]="searchControl"
     />
   </div>`,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class SearchInputComponent {
-  searchString = signal(this.storageServcie.get(STORAGE_KEYS.SEARCH_KEY));
-  logger = effect(() => {
-    this.storageServcie.set(STORAGE_KEYS.SEARCH_KEY, this.searchString());
-  });
-  constructor(private rotuer: Router, private storageServcie: StorageService) {}
+  searchControl = new FormControl(this.storage.get(STORAGE_KEYS.SEARCH_KEY));
+  constructor(private rotuer: Router, private storage: StorageService) {
+    this.searchControl.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((searchStr) => {
+        this.storage.set(STORAGE_KEYS.SEARCH_KEY, searchStr);
+      });
+  }
   updateSearchString(event: Event) {
     const searchKey = (event.target as HTMLInputElement).value;
-    this.searchString.set(searchKey);
     this.rotuer.navigate([`/searched/${searchKey}`]);
   }
 }
