@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CategoryComponent } from '@components/category/category.component';
 import { SearchInputComponent } from '@components/search-input.component';
+import { BehaviorSubject, timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,9 @@ import { SearchInputComponent } from '@components/search-input.component';
       <cous-category />
       <router-outlet class="hidden"></router-outlet>
     </div>
+    <footer class="p-10 text-center bg-gray-900 text-white mt-6">
+      thanks for visit my signals demo application 🖐️🥰
+    </footer>
   `,
   styles: [],
   imports: [
@@ -26,4 +30,6 @@ import { SearchInputComponent } from '@components/search-input.component';
     RouterLink,
   ],
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor() {}
+}

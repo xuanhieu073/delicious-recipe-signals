@@ -9,7 +9,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   standalone: true,
   template: `
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <ng-container *ngFor="let recipe of recipes()">
         <cous-recipe-card [recipe]="recipe" />
       </ng-container>

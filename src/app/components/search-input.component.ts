@@ -19,7 +19,7 @@ import { filter, fromEvent } from 'rxjs';
       [value]="searchString()"
     />
   </div>`,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
 })
 export class SearchInputComponent {
   searchString = signal(this.storageServcie.get(STORAGE_KEYS.SEARCH_KEY));

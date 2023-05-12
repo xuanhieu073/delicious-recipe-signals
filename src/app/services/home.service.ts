@@ -6,16 +6,4 @@ import { HomeComponent } from '../pages/home/home.component';
 @Injectable({ providedIn: 'root' })
 export class HomeService {
   selectedCategory = new BehaviorSubject<string>('');
-  constructor(private router: Router) {
-    this.router.events
-      .pipe(
-        filter(
-          (e) =>
-            e instanceof ActivationEnd &&
-            Object.keys(e.snapshot.params).length == 0 &&
-            e.snapshot.routeConfig.path === ''
-        )
-      )
-      .subscribe(() => this.selectedCategory.next(''));
-  }
 }

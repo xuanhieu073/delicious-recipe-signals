@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeCardComponent } from '@components/recipe-card/recipe-card.component';
@@ -10,13 +10,15 @@ import { map, pluck, switchMap, tap } from 'rxjs';
 @Component({
   standalone: true,
   template: `
-    <div class="container grid grid-cols-4 relative gap-6">
+    <div
+      class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative gap-6"
+    >
       <cous-recipe-card [recipe]="recipe" *ngFor="let recipe of recipes()" />
     </div>
   `,
   imports: [CommonModule, JsonPipe, RecipeCardComponent],
 })
-export class CuisineComponent {
+export class CuisineComponent implements OnDestroy {
   recipes = toSignal(
     this.route.params.pipe(
       map((params) => {
@@ -34,4 +36,7 @@ export class CuisineComponent {
     private route: ActivatedRoute,
     private homeService: HomeService
   ) {}
+  ngOnDestroy(): void {
+    this.homeService.selectedCategory.next(null);
+  }
 }

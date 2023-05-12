@@ -43,7 +43,7 @@ export class CategoryComponent {
   categories = signal<Category[]>([
     { cuisine: 'Italian', name: 'Italian', icon: '🍕' },
     { cuisine: 'American', name: 'American', icon: '🍔' },
-    { cuisine: 'Vietnamese', name: 'Vietnamese', icon: '🍜' },
+    { cuisine: 'Vietnamese', name: 'Viet', icon: '🍜' },
     { cuisine: 'Japanese', name: 'Japanese', icon: '🥩' },
   ]);
   selectedCategory = toSignal(this.homeService.selectedCategory.asObservable());
