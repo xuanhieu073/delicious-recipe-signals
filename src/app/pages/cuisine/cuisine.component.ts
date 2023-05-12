@@ -10,9 +10,7 @@ import { map, pluck, switchMap, tap } from 'rxjs';
 @Component({
   standalone: true,
   template: `
-    <div
-      class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative gap-6"
-    >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative gap-6">
       <cous-recipe-card [recipe]="recipe" *ngFor="let recipe of recipes()" />
     </div>
   `,
