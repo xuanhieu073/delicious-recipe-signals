@@ -1,6 +1,6 @@
-import { RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Recipe } from 'src/app/models/Recipe';
 
 @Component({

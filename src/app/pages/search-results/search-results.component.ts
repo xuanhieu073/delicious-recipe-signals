@@ -1,10 +1,10 @@
-import { pluck, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeCardComponent } from '@components/recipe-card/recipe-card.component';
 import { BackendService } from '@services/backend.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { pluck, switchMap } from 'rxjs';
 
 @Component({
   standalone: true,

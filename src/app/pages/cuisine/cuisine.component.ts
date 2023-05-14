@@ -1,11 +1,10 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, signal } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { RecipeCardComponent } from '@components/recipe-card/recipe-card.component';
-import { HomeService } from '@services/home.service';
 import { BackendService } from '@services/backend.service';
-import { map, pluck, switchMap, tap } from 'rxjs';
+import { CategoryService } from '@services/category.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -17,24 +16,24 @@ import { map, pluck, switchMap, tap } from 'rxjs';
   imports: [CommonModule, JsonPipe, RecipeCardComponent],
 })
 export class CuisineComponent implements OnDestroy {
+  @Input() set cuisine(cuisine: string) {
+    this.cuisine$.set(cuisine);
+    this.homeService.selectedCategory.set(cuisine);
+  }
+  cuisine$ = signal('');
   recipes = toSignal(
-    this.route.params.pipe(
-      map((params) => {
-        const cuisine = params['cuisine'] || '';
-        this.homeService.selectedCategory.next(cuisine);
-        return cuisine;
-      }),
+    toObservable(this.cuisine$).pipe(
       switchMap((cuisine) => {
         return this.backendService.getRecipesByCuisine(cuisine);
       })
     )
   );
+
   constructor(
     private backendService: BackendService,
-    private route: ActivatedRoute,
-    private homeService: HomeService
+    private homeService: CategoryService
   ) {}
   ngOnDestroy(): void {
-    this.homeService.selectedCategory.next(null);
+    this.homeService.selectedCategory.set(null);
   }
 }

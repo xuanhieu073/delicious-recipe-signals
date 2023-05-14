@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CategoryComponent } from '@components/category/category.component';
 import { SearchInputComponent } from '@components/search-input.component';
-import { BehaviorSubject, timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',

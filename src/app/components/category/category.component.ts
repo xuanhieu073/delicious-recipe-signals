@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, computed } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { HomeService } from '@services/home.service';
-import { pluck } from 'rxjs';
+import { Component, computed, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CategoryService } from '@services/category.service';
 
 type Category = {
   cuisine: string;
@@ -26,7 +24,7 @@ type Category = {
                 : 'from-gray-700 to-gray-800'
             ].join(' ')
           "
-          [routerLink]="['/cuisine/' + category.cuisine]"
+          [routerLink]="['/cuisine/', category.cuisine]"
         >
           <p>{{ category.icon }}</p>
           <p class="text-[10px] text-white font-semibold">
@@ -39,14 +37,14 @@ type Category = {
   imports: [RouterLink, CommonModule],
 })
 export class CategoryComponent {
-  constructor(private homeService: HomeService) {}
+  constructor(private homeService: CategoryService) {}
   categories = signal<Category[]>([
     { cuisine: 'Italian', name: 'Italian', icon: '🍕' },
     { cuisine: 'American', name: 'American', icon: '🍔' },
     { cuisine: 'Vietnamese', name: 'Viet', icon: '🍜' },
     { cuisine: 'Japanese', name: 'Japanese', icon: '🥩' },
   ]);
-  selectedCategory = toSignal(this.homeService.selectedCategory.asObservable());
+  selectedCategory = this.homeService.selectedCategory;
   categoriesWithSelected = computed(() =>
     this.categories().map((category) =>
       category.cuisine === this.selectedCategory()

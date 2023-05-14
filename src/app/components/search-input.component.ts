@@ -1,7 +1,7 @@
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Component, effect, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { STORAGE_KEYS, StorageService } from '@services/storage.service';
 import { debounceTime } from 'rxjs';
 

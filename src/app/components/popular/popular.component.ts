@@ -1,11 +1,11 @@
-import { BackendService } from '@services/backend.service';
-import { Component, ViewChild, signal } from '@angular/core';
-import { SwiperComponent, SwiperModule } from 'swiper/angular';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { interval, map, tap, timer } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { RecipeCardComponent } from '@components/recipe-card/recipe-card.component';
+import { BackendService } from '@services/backend.service';
+import { interval, tap } from 'rxjs';
 import { SwiperOptions } from 'swiper';
+import { SwiperComponent, SwiperModule } from 'swiper/angular';
 
 @Component({
   selector: 'cous-popular',
